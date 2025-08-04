@@ -1,0 +1,81 @@
+import { createContext, useReducer, useMemo } from "react";
+
+export const TaskContext = createContext();
+
+const taskReducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_TASK":
+      return [...state, action.payload];
+    case "TOGGLE_TASK":
+      return state.map(task =>
+        task.id === action.payload
+          ? {
+              ...task,
+              completed: !task.completed,
+              completedDate: !task.completed
+                ? new Date().toISOString().slice(0, 16).replace("T", ", ")
+                : undefined,
+            }
+          : task
+      );
+    default:
+      return state;
+  }
+};
+
+export const TaskContextProvider = ({ children }) => {
+  const [tasks, dispatch] = useReducer(taskReducer, []);
+
+  // ACTIONS
+  const addTask = (title, description, taskDueDate, startTime, endTime) => {
+    const newTask = {
+      id: Date.now(),
+      title,
+      description,
+      taskDueDate,
+      startTime,
+      endTime,
+      completed: false,
+    };
+    dispatch({ type: "ADD_TASK", payload: newTask });
+  };
+
+  const toggleTask = (id) => {
+    dispatch({ type: "TOGGLE_TASK", payload: id });
+  };
+
+  // FILTER HELPERS
+  const getTasksByFilter = (filterType) => {
+    const today = new Date().toISOString().slice(0, 10);
+    switch (filterType) {
+      case "Pending":
+        return tasks.filter(task => !task.completed);
+      case "Completed":
+        return tasks.filter(task => task.completed);
+      case "Due Today":
+        return tasks.filter(task => task.taskDueDate === today && !task.completed);
+      case "All":
+      default:
+        return tasks;
+    }
+  };
+
+  const getTodayTasks = () => {
+    const today = new Date().toISOString().slice(0, 10);
+    return tasks.filter(task => task.taskDueDate === today);
+  };
+
+  const contextValue = useMemo(() => ({
+    tasks,
+    addTask,
+    toggleTask,
+    getTasksByFilter,
+    getTodayTasks
+  }), [tasks]);
+
+  return (
+    <TaskContext.Provider value={contextValue}>
+      {children}
+    </TaskContext.Provider>
+  );
+};

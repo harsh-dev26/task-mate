@@ -1,0 +1,79 @@
+import React from "react";
+
+const Icon = ({ path, className = "h-6 w-6" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d={path} />
+  </svg>
+);
+
+const DashboardIcon = () => (
+  <Icon path="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+);
+const TasksIcon = () => (
+  <Icon path="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+);
+const AnalyticsIcon = () => (
+  <Icon path="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+);
+const SettingsIcon = () => (
+  <Icon path="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924-1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.096 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+);
+
+const SideBar = ({ activePage, onNavigate }) => {
+  const navLinks = [
+    { name: "Dashboard", icon: <DashboardIcon /> },
+    { name: "Tasks", icon: <TasksIcon /> },
+    { name: "Analytics", icon: <AnalyticsIcon /> },
+    { name: "Settings", icon: <SettingsIcon /> },
+  ];
+
+  return (
+    <nav className="h-screen w-64 bg-[#2D3748] text-white flex flex-col p-4 flex-shrink-0">
+      <div className="mb-10">
+        <h1 className="text-2xl font-bold">TaskFlow</h1>
+      </div>
+      <ul className="flex flex-col space-y-2">
+        {navLinks.map((link) => (
+          <li key={link.name}>
+            <button
+              onClick={() => onNavigate(link.name)}
+              className={`w-full flex items-center p-3 rounded-lg transition-colors duration-200 text-left ${
+                activePage === link.name
+                  ? "bg-blue-600 text-white"
+                  : "text-slate-300 hover:bg-slate-700"
+              }`}
+            >
+              <span className="mr-3">{link.icon}</span>
+              <span className="font-semibold">{link.name}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-auto">
+        <a
+          href="#"
+          className="flex items-center p-3 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors duration-200"
+        >
+          <img
+            className="h-10 w-10 rounded-full object-cover"
+            src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1061&q=80"
+            alt="User avatar"
+          />
+          <div className="ml-3">
+            <p className="text-sm font-semibold text-white">John Doe</p>
+            <p className="text-xs text-slate-400">john.doe@example.com</p>
+          </div>
+        </a>
+      </div>
+    </nav>
+  );
+};
+
+export default SideBar;
