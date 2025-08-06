@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { TaskContext } from '../store/TaskContext';
 
-const SeriousnessMeter = ({ percentage = 75 }) => {
+const SeriousnessMeter = () => {
+  const { getSeriousnessPercentage } = useContext(TaskContext);
+  const percentage = getSeriousnessPercentage();
+
   const strokeWidth = 10;
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
@@ -12,7 +16,6 @@ const SeriousnessMeter = ({ percentage = 75 }) => {
       <div className="flex flex-col items-center">
         <div className="relative w-40 h-40">
           <svg className="w-full h-full" viewBox="0 0 120 120">
-            {/* Background circle */}
             <circle
               className="text-gray-200"
               strokeWidth={strokeWidth}
@@ -22,7 +25,6 @@ const SeriousnessMeter = ({ percentage = 75 }) => {
               cx="60"
               cy="60"
             />
-            {/* Foreground circle */}
             <circle
               className="text-blue-600 transition-all duration-1000"
               strokeWidth={strokeWidth}

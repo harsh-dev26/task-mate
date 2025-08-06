@@ -5,6 +5,7 @@ import SideBar from './components/SideBar';
 import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
 import TasksPage from './pages/TasksPage';
+import AnalyticsPage from './pages/AnalyticsPage';
 
 function App() {
   const [activePage, setActivePage] = useState('Dashboard');
@@ -25,6 +26,7 @@ function App() {
             <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
               {activePage === 'Dashboard' && <Dashboard />}
               {activePage === 'Tasks' && <TasksPage />}
+              {activePage==='Analytics' && <AnalyticsPage/>}
             </main>
           </div>
         </div>

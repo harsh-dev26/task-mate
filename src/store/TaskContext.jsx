@@ -23,10 +23,17 @@ const taskReducer = (state, action) => {
   }
 };
 
+const calculateDurationInHours = (start, end) => {
+  if (!start || !end) return 0;
+  const startDate = new Date(`2000-01-01T${start}`);
+  const endDate = new Date(`2000-01-01T${end}`);
+  const diffMs = endDate - startDate;
+  return diffMs > 0 ? diffMs / (1000 * 60 * 60) : 0; // Convert ms to hours
+};
+
 export const TaskContextProvider = ({ children }) => {
   const [tasks, dispatch] = useReducer(taskReducer, []);
 
-  // ACTIONS
   const addTask = (title, description, taskDueDate, startTime, endTime) => {
     const newTask = {
       id: Date.now(),
@@ -44,7 +51,6 @@ export const TaskContextProvider = ({ children }) => {
     dispatch({ type: "TOGGLE_TASK", payload: id });
   };
 
-  // FILTER HELPERS
   const getTasksByFilter = (filterType) => {
     const today = new Date().toISOString().slice(0, 10);
     switch (filterType) {
@@ -65,12 +71,27 @@ export const TaskContextProvider = ({ children }) => {
     return tasks.filter(task => task.taskDueDate === today);
   };
 
+  const getSeriousnessPercentage = () => {
+    let total = 0;
+    let completed = 0;
+
+    tasks.forEach(task => {
+      const hours = calculateDurationInHours(task.startTime, task.endTime);
+      total += hours;
+      if (task.completed) completed += hours;
+    });
+
+    if (total === 0) return 0;
+    return Math.min(Math.round((completed / total) * 100), 100);
+  };
+
   const contextValue = useMemo(() => ({
     tasks,
     addTask,
     toggleTask,
     getTasksByFilter,
-    getTodayTasks
+    getTodayTasks,
+    getSeriousnessPercentage
   }), [tasks]);
 
   return (

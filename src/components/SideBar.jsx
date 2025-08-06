@@ -37,7 +37,7 @@ const SideBar = ({ activePage, onNavigate }) => {
   return (
     <nav className="h-screen w-64 bg-[#2D3748] text-white flex flex-col p-4 flex-shrink-0">
       <div className="mb-10">
-        <h1 className="text-2xl font-bold">TaskFlow</h1>
+        <h1 className="text-2xl font-bold">TaskMate</h1>
       </div>
       <ul className="flex flex-col space-y-2">
         {navLinks.map((link) => (
