@@ -1,6 +1,16 @@
-import { createContext, useReducer, useMemo } from "react";
+import { createContext, useReducer, useMemo, useEffect } from "react";
 
 export const TaskContext = createContext();
+
+const loadTasksFromLocalStorage = () => {
+  try {
+    const stored = localStorage.getItem("tasks");
+    return stored ? JSON.parse(stored) : [];
+  } catch (e) {
+    console.error("Error reading from localStorage", e);
+    return [];
+  }
+};
 
 const taskReducer = (state, action) => {
   switch (action.type) {
@@ -28,11 +38,17 @@ const calculateDurationInHours = (start, end) => {
   const startDate = new Date(`2000-01-01T${start}`);
   const endDate = new Date(`2000-01-01T${end}`);
   const diffMs = endDate - startDate;
-  return diffMs > 0 ? diffMs / (1000 * 60 * 60) : 0; // Convert ms to hours
+  return diffMs > 0 ? diffMs / (1000 * 60 * 60) : 0;
 };
 
 export const TaskContextProvider = ({ children }) => {
-  const [tasks, dispatch] = useReducer(taskReducer, []);
+  // FIXED: Initial state is undefined; initializer runs correctly now
+  const [tasks, dispatch] = useReducer(taskReducer, undefined, loadTasksFromLocalStorage);
+
+  // Save to localStorage on every change
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = (title, description, taskDueDate, startTime, endTime) => {
     const newTask = {
@@ -100,3 +116,4 @@ export const TaskContextProvider = ({ children }) => {
     </TaskContext.Provider>
   );
 };
+
