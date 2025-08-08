@@ -1,12 +1,72 @@
-# React + Vite
+TaskMate
+TaskMate is a smart task management and productivity tracking web application built using React and Tailwind CSS. It helps users plan their daily tasks, monitor progress, and stay consistent through features like productivity charts and a seriousness meter.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Features
+Add, complete, and track tasks
 
-Currently, two official plugins are available:
+Daily task tracking on the dashboard
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Productivity chart showing completed tasks over the past 7 days
 
-## Expanding the ESLint configuration
+Seriousness meter that calculates effort based on time spent
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Overview chart showing completed vs pending task ratio
+
+Local state management using Context API and useReducer
+
+Tech Stack
+React for frontend development
+
+Tailwind CSS for styling
+
+Context API with useReducer for state management
+
+Recharts library for visual charts
+
+Vite for faster development server
+
+Project Structure
+src/
+components/ - Reusable UI components
+pages/ - Page-level components like Dashboard
+store/ - Central state management using Context
+utils/ - Optional helper functions
+App.jsx - Main App component
+main.jsx - Entry point
+
+Setup Instructions
+Clone the repository
+git clone https://github.com/harsh-dev26/task-mate.git
+cd task-mate
+
+Install dependencies
+npm install
+
+Start the development server
+npm run dev
+
+Open the app in your browser at
+http://localhost:5173
+
+Planned Features
+Task editing and deletion
+
+Task labels, categories, or priority levels
+
+Dark mode support
+
+Mobile responsive enhancements
+
+Cloud integration using Firebase or Supabase for persistent data
+
+Contributing
+Contributions and feedback are welcome.
+You can fork the repository and submit a pull request.
+
+License
+This project is open-source and available under the MIT License.
+
+Author
+Name: Harsh Sharma
+Email: hs123619@gmail.com
+GitHub: https://github.com/harsh-dev26
