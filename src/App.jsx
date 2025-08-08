@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
 import TasksPage from './pages/TasksPage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import SettingsPage from './pages/SettingsPage';
 
 function App() {
   const [activePage, setActivePage] = useState('Dashboard');
@@ -27,6 +28,7 @@ function App() {
               {activePage === 'Dashboard' && <Dashboard />}
               {activePage === 'Tasks' && <TasksPage />}
               {activePage==='Analytics' && <AnalyticsPage/>}
+              {activePage==='Settings' && <SettingsPage/>}
             </main>
           </div>
         </div>
